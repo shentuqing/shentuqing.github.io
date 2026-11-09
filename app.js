@@ -5,8 +5,8 @@ const roles=[
 {date:'2018.02 — 2019.02',name:'Jiaozi Education',en:'Business Assistant Manager',zh:'骄子教育 · 业务助理经理',bullets:[['Conducted competitor research, supported operational improvements and coordinated events and vendors.','开展竞品研究、支持运营流程优化，并协调活动执行及供应商。']]},
 {date:'2015.05 — 2017.05',name:'Easymay Inc.',en:'Business Development Specialist · New York',zh:'业务拓展专员 · 纽约',bullets:[['Conducted US education market research and maintained senior client relationships to identify business needs and growth opportunities.','开展美国教育市场研究，维护客户管理层关系，识别业务需求与增长机会。']]}
 ];
-let lang='en';try{lang=localStorage.getItem('qing-language')||'en'}catch{}if(!['en','zh'].includes(lang))lang='en';
+let lang='en';
 function renderTimeline(){const open=[...document.querySelectorAll('#timeline details')].map(d=>d.open);document.getElementById('timeline').innerHTML=roles.map((r,i)=>`<details ${open[i]?'open':''}><summary><span class="date">${r.date}</span><div><h3>${r.name}</h3><p>${r[lang]}</p></div><span class="plus" aria-hidden="true">+</span></summary><div class="detail"><ul>${r.bullets.map(b=>`<li>${b[lang==='en'?0:1]}</li>`).join('')}</ul></div></details>`).join('')}
 function translate(){document.documentElement.lang=lang==='zh'?'zh-CN':'en';document.querySelectorAll('[data-en]').forEach(el=>el.innerHTML=el.dataset[lang]);const btn=document.getElementById('language');btn.textContent=lang==='en'?'中文':'EN';btn.setAttribute('aria-label',lang==='en'?'Switch to Chinese':'切换为英文');renderTimeline()}
-document.getElementById('language').addEventListener('click',()=>{lang=lang==='en'?'zh':'en';try{localStorage.setItem('qing-language',lang)}catch{}translate()});translate();
+document.getElementById('language').addEventListener('click',()=>{lang=lang==='en'?'zh':'en';translate()});translate();
 addEventListener('scroll',()=>{const total=document.documentElement.scrollHeight-innerHeight;document.querySelector('.progress').style.width=(total>0?scrollY/total*100:0)+'%'},{passive:true});
